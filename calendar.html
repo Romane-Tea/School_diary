@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <?!= HtmlService.createHtmlOutputFromFile('calendar_css').getContent(); ?>
+  <?!= HtmlService.createHtmlOutputFromFile('calendar_java').getContent(); ?>
+</head>
+
+  <body>
+    <div class="wrapper">
+      <!-- xxxx年xx月を表示 -->
+      <h1 id="header">カレンダーが表示されるまで触らずに待つ！　　欠席記録確認</h1>
+
+      <!-- ボタンクリックで月移動 -->
+      <div id="next-prev-button">
+        <button id="prev" onclick="prev()">‹</button>
+        <select id="select_class" class="select" onchange="select_class()">
+          <option value="">お待ちください</option>
+          <option value="1">1年</option>
+          <option value="2">2年</option>
+          <option value="3">3年</option>
+          <option value="特支">特支</option>
+        </select>
+        <select id="select_student" class="select" onchange="select_student()">
+          <option value="">生徒を選択</option>
+        </select>
+        <button id="change_hyouziUI" class="btn btn_change" onclick="change_hyouziUI()">一覧表示</button>
+        <input type="range" id="slider" min="5" max="30" step="1" change="changeFontSize" style="width:100px;">
+        <a style="color:black">サイズ<span id="fontsize">18</span></a>
+        <a class="btn btn_hukugen" href=<?=btn?>>欠席入力に移行</a>
+        <button id="next" onclick="next()">›</button>
+      </div>
+
+      <!-- カレンダー -->
+      <div id="calendar"></div>
+      <div>
+        <div>
+          <table id='data_table' class="data_table" style="text-align: center;" value="nomal">
+          </table>
+        </div>
+    </div>
+    </div>
+    
+  </body>
+
+</html>

@@ -1,0 +1,337 @@
+<style>
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 62.5%;   /*rem算出をしやすくするために*/
+  background: linear-gradient(90deg, rgb(125, 175, 240), rgb(168, 149, 250));
+}
+:root {
+	--font-size: 15px; /* 初期値 */
+}
+
+.first_bar {
+  display: table;
+  table-layout: fixed;
+  background: linear-gradient(90deg, rgb(22, 237, 190), rgb(8, 133, 122));
+  width: 98vw;
+  height: clamp(1rem, 1vw + 1rem, 8vh);
+  vertical-align: middle;
+  border: 1px solid black;
+  border-radius: 2rem;
+}
+
+.select {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  position: relative;
+  vertical-align: middle;
+  text-decoration: none;
+  color: #212529;
+  border-radius: 1rem;
+}
+
+.foot_bar {
+  display: table;
+  table-layout: fixed;
+  background: linear-gradient(90deg, rgb(79, 22, 237), rgb(8, 27, 133));
+  width: 98vw;
+  height: clamp(1rem, 1vw + 1rem, 8vh);
+  vertical-align: middle;
+  border: 1px solid black;
+  border-radius: 2rem;
+}
+
+.data_table tr,
+.data_table td,
+.data_table th {
+  border: 1px solid black;
+}
+
+.data_table td {
+  font-size: clamp(1rem, var(--font-size), 1.5rem);
+  background-color: #ffffff;
+}
+
+.data_table tr:nth-child(2n) td {
+  font-size: clamp(1rem, var(--font-size), 1.5rem);
+  background-color: #d9d9fd;
+}
+
+.data_table td,
+.data_table th {
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+}
+
+.data_table2 {
+  table-layout: fixed;
+  width: 98vw ! important;
+}
+
+.data_table2 td {
+  width: calc(98vw / 6) ! important;
+}
+
+.data_table2 td,
+.data_table2 th {
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: #f2f2f2;
+}
+
+.data_table tr:first-child th:first-child {
+  z-index: 1;
+}
+
+.scroll_table tr:first-child th {
+  border-top: 1px solid #999;
+}
+
+.scroll_table th:first-child {
+  border-left: 1px solid #999;
+}
+
+/* テーブルスクロール(本文内)のレイアウト */
+.scroll_table {
+  /* テーブル(本文内)を縦横スクロールするための設定 */
+  overflow-y: auto;
+  /* テーブルの右余白(ボックス外)を20pxに設定 */
+  margin-right: 1px;
+  /* 縦スクロール確認のため、テーブルの高さを設定 */
+  height: 85vh;
+}
+
+/* テーブル(本文内)のレイアウト */
+.main {
+  /* テーブルの上下余白(ボックス外)を20px、
+     左右余白(ボックス外)を40pxに設定 */
+  margin: 2px 4px;
+  /* 隣接するセルのボーダーを重ねて表示する設定 */
+  border-collapse: collapse;
+  /* カラム数が少なくてもテーブル幅を最大に保つため
+     テーブルの幅を(本文全体-左右余白(80px))に設定 */
+  /* width: calc(50% ); */
+  /* テーブル(本文内)を横スクロールするための設定 */
+  white-space: nowrap;
+  width: 98vw ! important;
+}
+
+.dai {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  position: relative;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.btn,
+a.btn,
+button.btn {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  position: relative;
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  /* letter-spacing: 0.1em; */
+  color: #212529;
+  border-radius: 1.5rem;
+}
+
+.btn--orange,
+a.btn--orange {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(255, 184, 0, 1) 57%, rgba(187, 107, 0, 1) 100%);
+}
+
+.btn--orange_black {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(209, 100, 46, 1) 57%, rgba(180, 100, 46, 1) 100%);
+}
+
+.btn_refresh {
+  color: rgb(255, 255, 255);
+  background-color: #4d8bff;
+}
+
+.btn_refresh:hover {
+  color: rgb(255, 255, 255);
+  background-color: #4a30cf;
+}
+
+.btn_check {
+  color: rgb(0, 0, 0);
+  background-color: #03ffff;
+}
+
+.btn_check:hover {
+  color: rgb(0, 0, 0);
+  background-color: #057685;
+}
+.btn_change {
+  color: rgb(255, 255, 255);
+  background-color: #ffa34d;
+}
+
+.btn_change:hover {
+  color: rgb(255, 255, 255);
+  background-color: #b15d24;
+}
+
+.btn_orange {
+  color: rgb(255, 255, 255);
+  background-color: #ffa703;
+}
+
+.btn_orange:hover {
+  color: rgb(255, 255, 255);
+  background-color: #854e05;
+}
+
+.btn_green {
+  color: rgb(255, 255, 255);
+  background-color: #3eff03;
+}
+
+.btn_green:hover {
+  color: rgb(255, 255, 255);
+  background-color: #058505;
+}
+
+.btn_blue {
+  color: rgb(255, 255, 255);
+  background-color: #03ffff;
+}
+
+.btn_blue:hover {
+  color: rgb(255, 255, 255);
+  background-color: #057685;
+}
+
+.kbtn {
+  font-size: clamp(0.5rem, var(--font-size), 2rem);
+  font-weight: 500;
+  line-height: 1;
+  position: relative;
+  padding: 0.3rem 1rem;
+  margin: 0rem 0.4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  color: #212529;
+  border-radius: 1rem;
+}
+
+.kbtn-kesseki {
+  color: #fff;
+  background: #ff165c;
+}
+
+.kbtn-kesseki:hover {
+  color: #fff;
+  background: #700928;
+}
+
+.kbtn-syuttei {
+  color: rgb(0, 0, 0);
+  background: #d3d60c;
+}
+
+.kbtn-syuttei:hover {
+  color: #fff;
+  background: #706609;
+}
+
+.kbtn-kibiki {
+  color: rgb(5, 5, 5);
+  background: #15ff34;
+}
+
+.kbtn-kibiki:hover {
+  color: rgb(0, 0, 0);
+  background: #09701f;
+}
+
+.kbtn-tikoku {
+  color: rgb(22, 22, 22);
+  background: #0eacf5;
+}
+
+.kbtn-tikoku:hover {
+  color: #fff;
+  background: #093670;
+}
+
+.kbtn-soutai {
+  color: #fff;
+  background: #3916ff;
+}
+
+.kbtn-soutai:hover {
+  color: #fff;
+  background: #090b70;
+}
+
+.kbtn-tensyutu {
+  color: #fff;
+  background: #f716ff;
+}
+
+.kbtn-tensyutu:hover {
+  color: #fff;
+  background: #5f0970;
+}
+
+/* タブレット等での表示設定*/
+@media screen and (max-width:480px) {
+
+  html {
+    font-size: 50%;
+  }
+
+  .dai {
+    padding: 0.1rem 0.1rem;
+  }
+
+  .btn,
+  a.btn,
+  button.btn {
+    padding: 0.1rem 0.1rem;
+    border-radius: 1rem;
+  }
+}
+
+</style>

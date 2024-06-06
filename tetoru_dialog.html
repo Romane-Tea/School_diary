@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script>
+      // すべてのフォームをイベントリスナーに登録する
+      function preventFormSubmit() {
+        var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(event) {
+            event.preventDefault();
+          });
+        }
+      }
+      window.addEventListener('load', preventFormSubmit);
+      
+      // フォームのサブミットで呼ばれる処理
+      function readFile(formObject) {
+        google.script.run.writeSheet(formObject);
+      }
+    </script>
+    <style>
+      .modal-dialog {
+        width: 500px; /* 任意の幅を指定 */
+        height: 100px; /* 任意の高さを指定 */
+    }
+    </style>
+  </head>
+  <body>
+    <form id="myForm" onsubmit="readFile(this)" enctype="multipart/form-data" style="height:100px;">
+      <input name="myFile" type="file" accept=".csv"  style="width:450px;" /><br>
+      <button type="submit">読み込んで書き込む</button>
+    </form>
+  </body>
+</html>
+

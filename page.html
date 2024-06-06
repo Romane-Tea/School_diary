@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<base target="_top">
+  <?!= HtmlService.createHtmlOutputFromFile('page_css').getContent(); ?>
+  <?!= HtmlService.createHtmlOutputFromFile('page_java').getContent(); ?>
+</head>
+
+<body>
+  <table class="first_bar" >
+    <tr id="first_bar" >
+      <td id="grade_class" class="dai">
+        <select id="select_class" class="select" onchange="select_class()">
+            <option value="1" >お待ちください…</option>
+          </select>
+      </td>
+      <td>   
+        <button id="refresh" class="btn btn_refresh" onclick="refresh()">再読込</button>
+      </td>
+      <!-- <td id='apli_name' class="dai" >出欠管理アプリ</td> -->
+    </tr>
+  </table>
+  <div id="parent" class="main">
+    <div id="scroll_table" class="scroll_table">
+      <table id='data-table' class="data_table" style="text-align: center;" value="nomal">
+      </table>
+    </div>
+  </div>
+  <div>
+    <div>
+      <table id='data-table2' class="data_table2" style="text-align: center; width: 98vw;" value="nomal">
+      </table>
+    </div>
+  </div>
+
+  <div class="foot_bar">
+    <table calss="foot_tb" >
+      <tr>
+        <td><a id="all" class="btn btn_orange" onclick="itiran()">全校一覧</a></td>
+        <td><button id="k_all" class="btn btn_green" onclick="k_itiran()">欠席者一覧</button></td>
+        <td><button id="rest_view" class="btn btn_blue" onclick="make_table_kesseki()">合計(表)</button></td>
+        
+        <td><input type="range" id="slider" min="5" max="30" step="1" change="changeFontSize"></td>
+        <td width="40%"><p style="color:white">サイズ<span id="fontsize">18</span></p></td>
+        <td><a id="calendar" class="btn btn_orange" href=<?=btn+"?p=calendar"?>>欠席記録に移行</a></td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>
