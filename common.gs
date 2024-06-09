@@ -10,8 +10,8 @@ function Nisshi_clear() {
 //隠れた行を再表示する
 function Redisplay(sheet){
   if (!sheet ){
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getActiveSheet();
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getActiveSheet();
   }
 
   //表示設定を解除
@@ -29,9 +29,9 @@ function Redisplay(sheet){
 //列の調節、空白列を非表示、行の高さを調整
 function Re_arrange(sheet){
   if (!sheet ){
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    // var sheet = ss.getActiveSheet();
-    var sheet = ss.getSheetByName('保健');
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    // const sheet = ss.getActiveSheet();
+    const sheet = ss.getSheetByName('保健');
   }
   //シートデータの読み込み
   hoken_date = sheet.getDataRange().getValues();
@@ -56,7 +56,7 @@ function Re_arrange(sheet){
       sheet.hideRows(29+show_row + 4 - free_row , 30 - show_row + free_row);
 
       //行数が多い時、高さを調整する
-      var row_h = Math.round( 262 / show_row )+1;
+      let row_h = Math.round( 262 / show_row )+1;
       sheet.setRowHeights(31, show_row + 4 - free_row , row_h);
 
       //行の高さが小さい時、フォントサイズを7にする
@@ -66,9 +66,9 @@ function Re_arrange(sheet){
     }
 
     //出停、忌引を太字にする
-    var lists = [3, 11, 17];
-    for (var r=33 ; r<33+show_row ;r++){
-      for (var col of lists){
+    let lists = [3, 11, 17];
+    for (let r=33 ; r<33+show_row ;r++){
+      for (let col of lists){
         mozi = hoken_date[r-1][col-1]; // mozi = sheet.getRange(r,col).getDisplayValue();
         if ((mozi.match('出停') != null) || (mozi.match('忌引') != null)){
           sheet.getRange(r,col).setFontWeight('bold');

@@ -28,13 +28,13 @@ function main() {
 function writeSheet(formObject) {
   // フォームで指定したテキストファイルを読み込む
   var fileBlob = formObject.myFile;
-  
+
   // テキストとして取得（Windowsの場合、文字コードに UTF-8 を指定）
-  var text = fileBlob.getDataAsString("UTF-8");
+  let text = fileBlob.getDataAsString("UTF-8");
 
   // 改行文字を正規表現で置換して、一時的な文字列に変換
-  var tempNewline = "@@@NEWLINE@@@";
-  var csvData = text.replace(/(\r\n|\r|\n)(?=(?:(?:[^"]*"){2})*[^"]*$)/g, tempNewline);
+  let tempNewline = "@NEWLINE@";
+  let csvData = text.replace(/(\r\n|\r|\n)(?=(?:(?:[^"]*"){2})*[^"]*$)/g, tempNewline);
 
   // 一時的な改行文字で分割し、それぞれの行をコンマで分割して配列に格納する
   csvData = csvData.split(tempNewline).map(function(row) {
@@ -43,8 +43,8 @@ function writeSheet(formObject) {
   csvData[csvData.length-1] =[,,,,,,,,,,,,,,,,,,,];
 
   // 書き込むシートを取得
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var t_sheet = ss.getSheetByName("tetoruデータ");
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const t_sheet = ss.getSheetByName("tetoruデータ");
   t_sheet.clear();
 
   // テキストファイルをシートに展開する
@@ -58,17 +58,17 @@ function writeSheet(formObject) {
 }
 
 function write_kesseki(new_data) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName("欠席入力");
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName("欠席入力");
 
   // シートから番号の配列を取得
   let s_data = sheet.getRange("A:F").getValues();
   let numbers = s_data.map((subArray) => subArray[0]);
   // 配列の数だけ処理を行う
   let not_write = 0;  //すでに書き込んであるデータ数の変数
-  for (var i = 0; i < new_data.length; i++) {
-    var number = new_data[i][1];
-    var row = numbers.indexOf(number) + 1; // 行番号
+  for (let i = 0; i < new_data.length; i++) {
+    let number = new_data[i][1];
+    let row = numbers.indexOf(number) + 1; // 行番号
 
     if (row > 0) { // 番号が見つかった場合
       console.log("欠席データ"+row,s_data[row-1][5]);
@@ -87,8 +87,8 @@ function write_kesseki(new_data) {
     } else { not_write++} //番号が見つからなかった場合
   }
   // 処理終了のメッセージボックスを出力
-  var msg = (not_write === 0) ? i + "件のデータが該当しました。\\n(取り込んだデータは黄色く表示されています。)" : i + "件のデータが該当しました。\\n" + not_write + "件のデータが該当生徒なし(要確認)。\\n(取り込んだデータは黄色く表示されています。)";
-  // var msg = (not_write === 0) ? i + "件のデータが該当しました。\\n(取り込んだデータは黄色く表示されています。)" : i + "件のデータが該当しました。\\n" + not_write + "件のデータが既に入力済み、もしくは該当生徒なし。\\n(取り込んだデータは黄色く表示されています。)";
+  let msg = (not_write === 0) ? i + "件のデータが該当しました。\\n(取り込んだデータは黄色く表示されています。)" : i + "件のデータが該当しました。\\n" + not_write + "件のデータが該当生徒なし(要確認)。\\n(取り込んだデータは黄色く表示されています。)";
+  // let msg = (not_write === 0) ? i + "件のデータが該当しました。\\n(取り込んだデータは黄色く表示されています。)" : i + "件のデータが該当しました。\\n" + not_write + "件のデータが既に入力済み、もしくは該当生徒なし。\\n(取り込んだデータは黄色く表示されています。)";
   Browser.msgBox(msg);
 }
 
@@ -98,7 +98,7 @@ function extraction(csvData) {
   let now_day = new Date();
   let day = now_day = new Date().toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",day: "2-digit"});	// 現在の日付をISO形式で取得し、文字列として取得
 
-  for (var i = 1; i < csvData.length - 1; i++) {
+  for (let i = 1; i < csvData.length - 1; i++) {
     let temp_data = csvData[i];
     //日付を検査
     if (temp_data[0].split("(")[0] === String(day)) {

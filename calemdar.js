@@ -31,9 +31,9 @@ async function start_html(){
   // hyouziUI = top_data[11][38];     //表示初期値を取得
 
   //欠席等の事由一覧を取得
-  for (var i = 0; i<4 ; i++){  //33列行目から36列目 -1
+  for (let i = 0; i<4 ; i++){  //33列行目から36列目 -1
     const reason_item =[];
-    for (var j=0 ; j<32 ;j++){  //3行目から33列目 -1
+    for (let j=0 ; j<32 ;j++){  //3行目から33列目 -1
       if (top_data[j+2][i+32] ==""){break;}else{
       reason_item[j] = top_data[j+2][i+32];
       }
@@ -53,8 +53,8 @@ async function start_html(){
 
 //表示データを作成
 function make_data(hyouziUI){
-  var calendar = document.getElementById('calendar');
-  var tableEle = document.getElementById('data_table');
+  let calendar = document.getElementById('calendar');
+  let tableEle = document.getElementById('data_table');
   if (hyouziUI ==1){          //個人表示なら
     tableEle.innerText ="";   //一旦一覧表を削除
     showProcess(showDate, calendar, student_id);
@@ -66,9 +66,9 @@ function make_data(hyouziUI){
 
 //表示形式の切り替えボタン関数
 function change_hyouziUI() {
-  var calendar = document.getElementById('calendar');
-  var tableEle = document.getElementById('data_table');
-  var change_hyouziUI_text = document.getElementById('change_hyouziUI');
+  let calendar = document.getElementById('calendar');
+  let tableEle = document.getElementById('data_table');
+  let change_hyouziUI_text = document.getElementById('change_hyouziUI');
   if (hyouziUI == 1) {           //個人表示なら
     calendar.style.height = '0vh';
     hyouziUI = 2;
@@ -109,20 +109,20 @@ function next() {
 
 // カレンダー表示
 function showProcess(date, calendar, student_id) {
-	var year = date.getFullYear();
-	var month = date.getMonth(); // 0始まり
+	let year = date.getFullYear();
+	let month = date.getMonth(); // 0始まり
 	document.querySelector('#header').innerHTML = "欠席記録確認カレンダー　" + year + "年 " + (month + 1) + "月";
 
-	var calendar = createProcess(year, month, student_id);
+	let calendar = createProcess(year, month, student_id);
 	document.querySelector('#calendar').innerHTML = calendar;
 }
 
 // 一覧表示
 function showProcess_itiran(date) {
-	var year = date.getFullYear();
-	var month = date.getMonth(); // 0始まり
+	let year = date.getFullYear();
+	let month = date.getMonth(); // 0始まり
   document.querySelector('#header').innerHTML = "欠席記録確認カレンダー　" + year + "年 " + (month + 1) + "月";
-  var data_table = make_itiran(date);
+  let data_table = make_itiran(date);
   document.querySelector('#data_table').innerHTML = data_table;
   let op = document.createElement("option");
   op.value = "";
@@ -132,29 +132,29 @@ function showProcess_itiran(date) {
 // カレンダー作成
 function createProcess(year, month, student_id) {
 	// 曜日
-	var calendar = "<table class='calendar_table'><tr class='dayOfWeek'>";
-	for (var i = 0; i < week.length; i++) {
+	let calendar = "<table class='calendar_table'><tr class='dayOfWeek'>";
+	for (let i = 0; i < week.length; i++) {
 		calendar += "<th>" + week[i] + "</th>";
 	}
 	calendar += "</tr>";
 
-	var count = 0;
-	var startDayOfWeek = new Date(year, month, 1).getDay();	//1日の開始曜日 0:日曜日～6:土曜日
-	var endDate = new Date(year, month + 1, 0).getDate();		//月の最終日
-	var lastMonthEndDate = new Date(year, month, 0).getDate();	//前の月の最終日
-	var row = Math.ceil((startDayOfWeek + endDate) / week.length);	//カレンダーの行数
+	let count = 0;
+	let startDayOfWeek = new Date(year, month, 1).getDay();	//1日の開始曜日 0:日曜日～6:土曜日
+	let endDate = new Date(year, month + 1, 0).getDate();		//月の最終日
+	let lastMonthEndDate = new Date(year, month, 0).getDate();	//前の月の最終日
+	let row = Math.ceil((startDayOfWeek + endDate) / week.length);	//カレンダーの行数
 
- 	var temp_date = (month + 1) + "月" + "1日";
-	for (var start_col = 6; start_col < dataList[7].length; start_col++) {
+ 	let temp_date = (month + 1) + "月" + "1日";
+	for (let start_col = 6; start_col < dataList[7].length; start_col++) {
 		if (dataList[7][start_col] == temp_date) {
 			break;
 		}
 	}
 	// 1行ずつ設定
-	for (var i = 0; i < row; i++) {
+	for (let i = 0; i < row; i++) {
 		calendar += "<tr>";
 		// 1colum単位で設定
-		for (var j = 0; j < week.length; j++) {
+		for (let j = 0; j < week.length; j++) {
 			if (i == 0 && j < startDayOfWeek) {
 				// 1行目で1日まで先月の日付を設定
 				calendar += "<td class='disabled'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "<br>" + "</td>";
@@ -168,8 +168,8 @@ function createProcess(year, month, student_id) {
 
         // 当月の日付を曜日に照らし合わせて設定
 				count++;
-				var dateInfo = checkDate(year, month, count, start_col);
-				var btn = document.createElement('button');
+				let dateInfo = checkDate(year, month, count, start_col);
+				let btn = document.createElement('button');
 				
 				//当日なら
 				if (dateInfo.isToday) {
@@ -202,16 +202,16 @@ function createProcess(year, month, student_id) {
 
 //一覧表示作成
 function make_itiran(date){
-	var year = date.getFullYear();
-	var month = date.getMonth(); // 0始まり
-	var data_table = "" ;//document.getElementById(data_table);
-	var count = 0;
-	var startDay = new Date(year, month, 1).getDate();	//月の開始日
-	var endDate = new Date(year, month + 1, 0).getDate();		//月の最終日
+	let year = date.getFullYear();
+	let month = date.getMonth(); // 0始まり
+	let data_table = "" ;//document.getElementById(data_table);
+	let count = 0;
+	let startDay = new Date(year, month, 1).getDate();	//月の開始日
+	let endDate = new Date(year, month + 1, 0).getDate();		//月の最終日
 
-	var temp_date = (month + 1) + "月" + "1日";
+	let temp_date = (month + 1) + "月" + "1日";
 	//開始日の列番号を取得
-	for (var start_col = 6; start_col < dataList[7].length; start_col++) {
+	for (let start_col = 6; start_col < dataList[7].length; start_col++) {
 		if (dataList[7][start_col] == temp_date) {
 			break;
 		}
@@ -221,7 +221,7 @@ function make_itiran(date){
 	} else {
 		data_table += "<tr><th class='fixed02'>番号　名前</th>";
 
-		for (var i = 1; i < (endDate-startDay+2); i++) {
+		for (let i = 1; i < (endDate-startDay+2); i++) {
       const week_day = new Date(year, month, i).getDay(); //曜日の数字を取得
       data_table += "<th class='fixed02'>" + i +"("+ week[week_day] +")</th>";  //日付＋曜日
 		}
@@ -234,7 +234,7 @@ function make_itiran(date){
 				id_gr = dataList[student_id][0];
 				if (id_gr == grade) {
 					data_table += "<tr><th class='fixed01'>"+dataList[student_id][1]+"<br>"+dataList[student_id][2]+"</th>";
-					for (var count=1; count <(endDate-startDay+2); count++){
+					for (let count=1; count <(endDate-startDay+2); count++){
 						//欠席データを取得
 						const kesseki = kesseki_data(student_id, start_col-3, year, month,  count);
 						const day_data = make_day(kesseki, year, month, count, student_id, start_col);
@@ -247,7 +247,7 @@ function make_itiran(date){
 				id_cl = dataList[student_id][1][1];
 				if ((id_gr == grade)&&(id_cl==tclass)) {
 					data_table += "<tr><th class='fixed02'>"+dataList[student_id][1]+"<br>"+dataList[student_id][2]+"</th>";
-					for (var count=1; count <(endDate-startDay+2); count++){
+					for (let count=1; count <(endDate-startDay+2); count++){
 						//欠席データを取得
 						const kesseki = kesseki_data(student_id, start_col-3, year, month,  count);
 						const day_data = make_day(kesseki, year, month, count, student_id, start_col);
@@ -286,8 +286,8 @@ function kesseki_data(student_id, start_col, year, month,  count){
 
 // 当月の日付を曜日に照らし合わせて設定　一覧用
 function make_day(kesseki, year, month, count, student_id, start_col){
-  var dateInfo = checkDate(year, month, count, start_col);
-  var btn = document.createElement('button');
+  let dateInfo = checkDate(year, month, count, start_col);
+  let btn = document.createElement('button');
   
   //当日なら
   if (dateInfo.isToday) {
@@ -467,7 +467,7 @@ function make_k_ziyu(btn_id){
   op.value = "";
   op.text = "事由を選択";
   selecter_ziyu.appendChild(op);
-  for (var i = 0; i < k_ziyu.length; i++) {
+  for (let i = 0; i < k_ziyu.length; i++) {
 		let op = document.createElement("option");
 		op.value = btn_id + '_' + k_ziyu[i] +'_'+ (i+1);
 		op.text = k_ziyu[i];
@@ -488,7 +488,7 @@ function make_riyu(td_id,list,re){
   op.value = "";
   op.text = "理由を選択";
   selecter_riyu.appendChild(op);
-  for (var i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i++) {
 		let op = document.createElement("option");
 		op.value = td_id + '_' + list[i] +'_'+ re;
 		op.text = list[i];
@@ -512,7 +512,7 @@ function checkDate(year, month, day, start_col) {
 		};
 	}
 
-	var checkHoliday = isHoliday(year, month, day, start_col);
+	let checkHoliday = isHoliday(year, month, day, start_col);
 	return {
 		isToday: false,
 		isHoliday: checkHoliday[0],
@@ -530,9 +530,9 @@ function isToday(year, month, day) {
 
 // 祝日かどうか
 function isHoliday(year, month, day, start_col) {
-	var checkDate = year + '/' + (month + 1) + '/' + day;
+	let checkDate = year + '/' + (month + 1) + '/' + day;
 	// 1行目はヘッダーのため、初期値1で開始
-	for (var i = 1; i < dataList.length; i++) {
+	for (let i = 1; i < dataList.length; i++) {
 		if (dataList[i][0] === checkDate) {
 			return [true, dataList[i][1], false];
 		} else if (dataList[6][start_col + day * 3 - 3] != "〇") {
@@ -544,9 +544,9 @@ function isHoliday(year, month, day, start_col) {
 
 //学級選択時の動作 生徒一覧を作成
 function select_class() {
-  var select_class = document.getElementById('select_class');
-  var select_student = document.getElementById('select_student');
-  var class_id = select_class.value;
+  let select_class = document.getElementById('select_class');
+  let select_student = document.getElementById('select_student');
+  let class_id = select_class.value;
   grade = class_id.split('_')[0];
   tclass = class_id.split('_')[1];
 
@@ -565,7 +565,7 @@ function select_class() {
   }else{                           //個人表示のときの動作
     op.text = "生徒を選択";
     select_student.appendChild(op);
-    for (var i = 9; i < 510; i++) {     //行番号10行目から510行目まで
+    for (let i = 9; i < 510; i++) {     //行番号10行目から510行目まで
       id_num = dataList[i][1];
       if (grade=="特支"){
         id_gr = dataList[i][0];
@@ -591,7 +591,7 @@ function select_class() {
 
 //生徒選択時の動作
 function select_student() {
-	var select_student = document.getElementById('select_student');
+	let select_student = document.getElementById('select_student');
 	student_id = select_student.value;
 	showProcess(showDate, calendar, student_id);
 }
@@ -606,7 +606,7 @@ function get_sheet_data(sheet_name) {
 }
 //シートの学級一覧からリストとして返す関数
 function class_list() {
-  var obj = document.getElementById('select_class');
+  let obj = document.getElementById('select_class');
   while (obj.lastChild) {
     obj.removeChild(obj.lastChild);
   }
@@ -615,8 +615,8 @@ function class_list() {
   op.text = "学級を選択";
   obj.appendChild(op);
 
-  for (var i = 1; i < 7; i++) {     //行番号3行目から8行目まで
-    for (var j = 1; j < 9; j++) {   //38列目から45列目まで
+  for (let i = 1; i < 7; i++) {     //行番号3行目から8行目まで
+    for (let j = 1; j < 9; j++) {   //38列目から45列目まで
       if ((top_data[i+1][j+38] != "") && (top_data[i+1][38] != "特支")) {
         let op = document.createElement("option");
         op.value = i + "_" + j;
@@ -636,11 +636,11 @@ function class_list() {
 function changeFontSize() {
   // スライダーとデータ要素を取得
   var slider = document.getElementById("slider");
-  var root = document.documentElement;
-  var data = document.getElementById("data_table");
-  var font_size = document.getElementById("fontsize");
+  let root = document.documentElement;
+  let data = document.getElementById("data_table");
+  let font_size = document.getElementById("fontsize");
   // スライダーの値に応じてフォントサイズを計算
-  var fontSize = slider.value + "px";
+  let fontSize = slider.value + "px";
   // データ要素のフォントサイズを設定
   // ルート要素のカスタムプロパティの値を設定
   root.style.setProperty("--font-size", fontSize);

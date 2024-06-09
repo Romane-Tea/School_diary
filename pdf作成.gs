@@ -1,22 +1,22 @@
 // pdf作成条件判定関数
 function save_pdf(ssId,sheet,auto) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
 
   if (!sheet){      //シート上のマクロ起動時の設定
-    var ssId = ss.getId(); // スプレッドシートIDを取得
-    // var sheet = ss.getSheetByName('日誌入力');
-    var sheet = ss.getActiveSheet(); //スプレッドシート内のターゲットシート
+    let ssId = ss.getId(); // スプレッドシートIDを取得
+    // const sheet = ss.getSheetByName('日誌入力');
+    let sheet = ss.getActiveSheet(); //スプレッドシート内のターゲットシート
     var dialog = true
   }
-  var sheet_name = sheet.getRange("A1").getValue();
-  var shId = sheet.getSheetId(); //ターゲットシートのID
-  var parentFolder = DriveApp.getFileById(ssId).getParents(); // IDからスプレッドシートのファイルを取得⇒親フォルダを取得
-  var folderId = parentFolder.next().getId(); // 親フォルダIDを取得
+  let sheet_name = sheet.getRange("A1").getValue();
+  let shId = sheet.getSheetId(); //ターゲットシートのID
+  let parentFolder = DriveApp.getFileById(ssId).getParents(); // IDからスプレッドシートのファイルを取得⇒親フォルダを取得
+  let folderId = parentFolder.next().getId(); // 親フォルダIDを取得
 
   // PDFファイル存在時の動作確認用
-  var start_sheet = ss.getSheetByName('リスト');
-  var pdfBool = start_sheet.getRange("AM22").getValue();    //上書き保存の設定値
-  var auto_pdfBool = start_sheet.getRange("AM25").getValue(); //自動実行時の上書き保存設定値
+  let start_sheet = ss.getSheetByName('リスト');
+  let pdfBool = start_sheet.getRange("AM22").getValue();    //上書き保存の設定値
+  let auto_pdfBool = start_sheet.getRange("AM25").getValue(); //自動実行時の上書き保存設定値
   if (auto == 'all'){
     dialog == false;
   } else if (auto == 'auto'){
@@ -39,7 +39,7 @@ function save_pdf(ssId,sheet,auto) {
   }
   //日付データを取得,加工
   // var today = new Date( today );
-  var fileName = 'R' + (today.getFullYear() - 2018) + '.' + (today.getMonth() + 1) + '.' + (today.getDate()) + sheet_name ;
+  let fileName = 'R' + (today.getFullYear() - 2018) + '.' + (today.getMonth() + 1) + '.' + (today.getDate()) + sheet_name ;
 
   // PDFフォルダの有無を確認
   const targetFolderName = "PDF";
@@ -62,7 +62,7 @@ function save_pdf(ssId,sheet,auto) {
   if (pdfBool == 0 ){
     const targetFolderName2 = "BackupPDF";
     const folderIterator2 = DriveApp.getFolderById(targetFolderId).getFoldersByName(targetFolderName2);  // 指定した名前のフォルダを取得
-    var targetFolder2;
+    let targetFolder2;
     if (folderIterator2.hasNext()) {
       // 存在する場合
       targetFolder2 = folderIterator2.next();
@@ -75,25 +75,25 @@ function save_pdf(ssId,sheet,auto) {
     targetFolderId2 = targetFolder2.getId()
     console.log("BackupPDFフォルダのID=" + targetFolderId2 )
   }else {
-    var targetFolder2 ="";
-    var targetFolderId2 ="";
+    let targetFolder2 ="";
+    let targetFolderId2 ="";
   }
   
   // 作成するPDFファイルの存在の有無　　IDを取得
   const fileNamePDF = fileName + '.pdf';
-  var files = DriveApp.getFolderById(targetFolderId).getFiles();
+  let files = DriveApp.getFolderById(targetFolderId).getFiles();
   while (files.hasNext()) {
-    var file = files.next();
-    var tempfileName = file.getName() ;
+    let file = files.next();
+    let tempfileName = file.getName() ;
     if(tempfileName == fileNamePDF){
       break;
       }
   }
   if (!file || file.getName() != fileNamePDF){    //ファイルが存在しない、又はファイルネームが違うとき
-    var pdfId = ""
+    let pdfId = ""
     Logger.log("既存のPDFはありません");
   }else if (file.getName() == fileNamePDF){
-    var pdfId = file.getId()
+    let pdfId = file.getId()
     Logger.log("既存のPDF_ID="+pdfId);
     if (auto == "auto" && auto_pdfBool == 2) {
       return;
@@ -106,10 +106,10 @@ function save_pdf(ssId,sheet,auto) {
 
 //必要事項が入力してるかチェック ※天気、未定者
 function input_check(){
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
-  var input_sheet = ss.getSheetByName('入力');
-  var weather = input_sheet.getRange("G3").getValue(); //天気が入っている
-  var mitei = input_sheet.getRange("AC10").getValue(); //未定者がいないか
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const input_sheet = ss.getSheetByName('入力');
+  let weather = input_sheet.getRange("G3").getValue(); //天気が入っている
+  let mitei = input_sheet.getRange("AC10").getValue(); //未定者がいないか
   if (weather =="" && mitei !=0 ){
     Browser.msgBox("天気が入力されていません。未定者がいます。入力後、もう一度実行してください。")
   } else if (weather =="" ){
@@ -121,11 +121,11 @@ function input_check(){
 
 //必要事項が入力してるかチェック ※給食関係
 function input_check_kyusyoku(){
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
-  var input_sheet = ss.getSheetByName('入力');
-  var pre_ab = input_sheet.getRange("AJ6");  //給食日かどうか
-  var menu = input_sheet.getRange("AF12").getValue(); //メニューが入っている
-  var temperature = input_sheet.getRange("AC10").getValue(); //温度が入っているか
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const input_sheet = ss.getSheetByName('入力');
+  let pre_ab = input_sheet.getRange("AJ6");  //給食日かどうか
+  let menu = input_sheet.getRange("AF12").getValue(); //メニューが入っている
+  let temperature = input_sheet.getRange("AC10").getValue(); //温度が入っているか
   if (pre_ab == ""){
     return;
   } else if (menu =="" && temperature == "" ){
@@ -142,13 +142,13 @@ function save_gakko(){
   let mailAddress = Session.getActiveUser().getEmail();
   console.log('実行者：'+mailAddress);
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
   ssId = ss.getId(); // スプレッドシートIDを取得
   SpreadsheetApp.flush();
   kesseki_record();
   Nisshi_record();
-  var sheet1 = ss.getSheetByName('学校');
-  var sheet4 = ss.getSheetByName('入力');
+  const sheet1 = ss.getSheetByName('学校');
+  const sheet4 = ss.getSheetByName('入力');
   sheet1.activate();
   save_pdf();
 };
@@ -157,13 +157,13 @@ function save_hoken(){
   let mailAddress = Session.getActiveUser().getEmail();
   console.log('実行者：'+mailAddress);
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
   ssId = ss.getId(); // スプレッドシートIDを取得
   SpreadsheetApp.flush();
   kesseki_record();
   Nisshi_record();
-  var sheet2 = ss.getSheetByName('保健');
-  var sheet4 = ss.getSheetByName('入力');
+  const sheet2 = ss.getSheetByName('保健');
+  const sheet4 = ss.getSheetByName('入力');
   sheet2.activate();
   save_pdf();
 };
@@ -172,18 +172,18 @@ function save_kyusyoku(){
   let mailAddress = Session.getActiveUser().getEmail();
   console.log('実行者：'+mailAddress);
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
   ssId = ss.getId(); // スプレッドシートIDを取得
   SpreadsheetApp.flush();
   kesseki_record();
   Nisshi_record();
-  var sheet3 = ss.getSheetByName('給食');
-  var sheet4 = ss.getSheetByName('入力');
+  const sheet3 = ss.getSheetByName('給食');
+  const sheet4 = ss.getSheetByName('入力');
   sheet3.activate();
   save_pdf();
 };
 
-//PDF作成関数 
+//PDF作成関数
 function createPdf(targetFolder, targetFolderId, targetFolder2, targetFolderId2, pdfBool, ssId, shId, sheet_name, fileName, pdfId, dialog){
   //シート名で印刷範囲を決める
   if (sheet_name =='学校'){
@@ -249,12 +249,12 @@ function createPdf(targetFolder, targetFolderId, targetFolder2, targetFolderId2,
   
   // 作成したPDFファイルのIDを取得
   const fileNamePDF = fileName + '.pdf';
-  var files = DriveApp.getFolderById(targetFolderId).getFiles();
+  let files = DriveApp.getFolderById(targetFolderId).getFiles();
   while (files.hasNext()) {
-    var file = files.next();
+    let file = files.next();
     if(file.getName() == fileNamePDF){break;}
   }
-  var pdfId = file.getId()
+  let pdfId = file.getId()
   Logger.log(file.getId());
   make_link(sheet_name,pdfId);
   
@@ -281,9 +281,9 @@ function make_link(sheet_name,pdfId){
 }
 
 function pdf_link(pdfId){
-  var link = "https://drive.google.com/file/d/"
-  var linkId = pdfId
-  var htmlOutput = HtmlService
+  let link = "https://drive.google.com/file/d/"
+  let linkId = pdfId
+  let htmlOutput = HtmlService
       .createHtmlOutput('<p><a href=' +link + linkId + ' target="blank">PDFを表示する</a></p>')
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setWidth(350)

@@ -5,14 +5,14 @@ function kesseki_record(){
   const sheetR = ss.getSheetByName('欠席記録');
 
   //欠席記録の最終記録日の列を取得
-  var lastCol = sheetR.getRange(8, sheetR.getMaxColumns()).getNextDataCell(SpreadsheetApp.Direction.PREVIOUS).getColumn();
+  let lastCol = sheetR.getRange(8, sheetR.getMaxColumns()).getNextDataCell(SpreadsheetApp.Direction.PREVIOUS).getColumn();
   //欠席入力データの最終行を取得
-  var lastRow = sheetN.getRange(sheetN.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
+  let lastRow = sheetN.getRange(sheetN.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
 
   //日付の取得
-  var today = sheetN.getRange("J3").getValue().setHours(0,0,0,0);
-  var todayH = sheetN.getRange("J3").getValue();
-  var past = sheetR.getRange(8,lastCol).getValue().setHours(0,0,0,0);
+  let today = sheetN.getRange("J3").getValue().setHours(0,0,0,0);
+  let todayH = sheetN.getRange("J3").getValue();
+  let past = sheetR.getRange(8,lastCol).getValue().setHours(0,0,0,0);
 
   if (past == today){
       paste(lastCol-2,lastRow,todayH,'欠席記録');
@@ -26,14 +26,14 @@ function kesseki_record_backup(){
   const sheetRB = ss.getSheetByName('欠席記録backup');
 
   //欠席記録の最終記録日の列を取得
-  var lastCol = sheetRB.getRange(8, sheetRB.getMaxColumns()).getNextDataCell(SpreadsheetApp.Direction.PREVIOUS).getColumn();
+  let lastCol = sheetRB.getRange(8, sheetRB.getMaxColumns()).getNextDataCell(SpreadsheetApp.Direction.PREVIOUS).getColumn();
   //欠席入力データの最終行を取得
-  var lastRow = sheetN.getRange(sheetN.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
+  let lastRow = sheetN.getRange(sheetN.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
 
   //日付の取得
-  var today = sheetN.getRange("J3").getValue().setHours(0,0,0,0);
-  var todayH = sheetN.getRange("J3").getValue();
-  var past = sheetRB.getRange(8,lastCol).getValue().setHours(0,0,0,0);
+  let today = sheetN.getRange("J3").getValue().setHours(0,0,0,0);
+  let todayH = sheetN.getRange("J3").getValue();
+  let past = sheetRB.getRange(8,lastCol).getValue().setHours(0,0,0,0);
 
   if (past == today){
       paste(lastCol-2,lastRow,todayH,'欠席記録backup');
@@ -47,8 +47,8 @@ function paste(lastCol,lastRow,todayH,sheet_name){
   const sheetR = ss.getSheetByName(sheet_name);
 
   //授業日「〇」の取得
-  var study_day = sheetN.getRange("G8").getValue();
-  var stady_past = sheetR.getRange(7,lastCol,1,3);   //記録シートに〇を貼り付けるセルを指定
+  let study_day = sheetN.getRange("G8").getValue();
+  let stady_past = sheetR.getRange(7,lastCol,1,3);   //記録シートに〇を貼り付けるセルを指定
 
   if (lastCol < 7){
     lastCol = 7;
@@ -97,7 +97,7 @@ function Kesseki_clear_hand(){
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName('欠席入力');
 
-  var result=Browser.msgBox("欠席情報をすべて消しますか？この作業は元に戻せません。",Browser.Buttons.YES_NO);
+  const result=Browser.msgBox("欠席情報をすべて消しますか？この作業は元に戻せません。",Browser.Buttons.YES_NO);
   if(result=="no"){
     Browser.msgBox("中止しました。");
   }else{
@@ -129,9 +129,9 @@ function Re_kesseki_paste() {
   const sheetR = ss.getSheetByName('欠席記録');
 
   //欠席記録の記録列を取得
-  var targetCol = sheetS.getRange('M1').getValue();
+  let targetCol = sheetS.getRange('M1').getValue();
   //欠席入力データの最終行を取得
-  var lastRow = sheetS.getRange(sheetS.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
+  let lastRow = sheetS.getRange(sheetS.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
 
   //欠席修正のデータをコピー、貼り付け
   let copyRange = sheetS.getRange(9,6,lastRow -8 ,3);
@@ -163,14 +163,14 @@ function kesseki_reRecord(){
   const sheetI = ss.getSheetByName('一覧表');
 
   //記録する日付を取得
-  var record_day = sheetY.getRange('M2').getDisplayValue();
-  var record_column = sheetY.getRange('M3').getValue();
+  let record_day = sheetY.getRange('M2').getDisplayValue();
+  let record_column = sheetY.getRange('M3').getValue();
 
   //欠席読込データの最終行を取得
-  var lastRow = sheetY.getRange(sheetY.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
+  let lastRow = sheetY.getRange(sheetY.getMaxRows(), 1).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
 
   //実行するか確認    返り値は"ok"と"cancel"
-  var quession = Browser.msgBox("記録を上書きしますか？", Browser.Buttons.OK_CANCEL);
+  const quession = Browser.msgBox("記録を上書きしますか？", Browser.Buttons.OK_CANCEL);
 
   if (quession == "cancel"){
     console.log(quession +"=cancel");
@@ -208,9 +208,9 @@ function syukei_add() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const spreadsheet = ss.getSheetByName('欠席集計');
   //シートの最終行を取得
-  var lastColumn = spreadsheet.getLastColumn();
+  let lastColumn = spreadsheet.getLastColumn();
   //生徒数を取得
-  var lastRaw = spreadsheet.getRange('B7').getValue()-1;
+  let lastRaw = spreadsheet.getRange('B7').getValue()-1;
   spreadsheet.getRange(11,1,lastRaw,lastColumn).activate();
   spreadsheet.getRange('10:10').copyTo(spreadsheet.getActiveRange(), SpreadsheetApp.CopyPasteType.PASTE_NORMAL, false);
 };
@@ -221,22 +221,22 @@ function zure(){
   const sheet = ss.getSheetByName('欠席記録');
   dataList = GetSpreadsheet("欠席記録");  //欠席記録シート全体のデータを取得
   //シートの最終行を取得
-  var lastColumn = sheet.getLastColumn();
-  for (var i=6 ; i<lastColumn; i +=3 ){
-    var one = Number(dataList[1][i])+Number(dataList[1][i+1])+Number(dataList[1][i+2]);
-    for (var one_k = 0; one_k < 50; one_k++){
+  let lastColumn = sheet.getLastColumn();
+  for (let i=6 ; i<lastColumn; i +=3 ){
+    let one = Number(dataList[1][i])+Number(dataList[1][i+1])+Number(dataList[1][i+2]);
+    for (let one_k = 0; one_k < 50; one_k++){
       if (dataList[one_k+514][i] != ""){}else{break;}
     }
     if (one != one_k){console.log(dataList[7][i]+"1年",one,one_k)}
 
-    var two = Number(dataList[2][i])+Number(dataList[2][i+1])+Number(dataList[2][i+2]);
-    for (var two_k = 0; two_k < 50; two_k++){
+    let two = Number(dataList[2][i])+Number(dataList[2][i+1])+Number(dataList[2][i+2]);
+    for (let two_k = 0; two_k < 50; two_k++){
       if (dataList[two_k+514][i+1] != ""){}else{break;}
     }
     if (two != two_k){console.log(dataList[7][i]+"2年",two,two_k)}
 
-    var three = Number(dataList[3][i])+Number(dataList[3][i+1])+Number(dataList[3][i+2]);
-    for (var three_k = 0; three_k < 50; three_k++){
+    let three = Number(dataList[3][i])+Number(dataList[3][i+1])+Number(dataList[3][i+2]);
+    for (let three_k = 0; three_k < 50; three_k++){
       if (dataList[three_k+514][i+2] != ""){}else{break;}
     }
     if (three != three_k){console.log(dataList[7][i]+"3年",three,three_k)}
@@ -251,7 +251,7 @@ function kesseki_kiroku_update() {
   let datas = range.getValues();
 
   //出席番号格納変数
-  var no_0 = 0;
+  let no_0 = 0;
 
   for (let i=0; i<Math.floor(datas[8].length/3); i++){
     //行格納変数
@@ -313,7 +313,7 @@ function kesseki_kiroku_update() {
   }
   let past_datas =[]
   for (let i = 514; i < datas.length; i++) {
-    var row = datas[i];
+    let row = datas[i];
     past_datas.push(row);
   }
   sheetR.getRange(515,1,past_datas.length,past_datas[0].length).setValues(past_datas);

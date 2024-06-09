@@ -19,15 +19,15 @@ function save_all(){
   let mailAddress = Session.getActiveUser().getEmail();
   console.log('実行者：'+mailAddress);
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
   ssId = ss.getId(); // スプレッドシートIDを取得
   SpreadsheetApp.flush();
   kesseki_record();
   Nisshi_record();
-  var sheet1 = ss.getSheetByName('学校');
-  var sheet2 = ss.getSheetByName('保健');
-  var sheet3 = ss.getSheetByName('給食');
-  var sheet4 = ss.getSheetByName('入力');
+  const sheet1 = ss.getSheetByName('学校');
+  const sheet2 = ss.getSheetByName('保健');
+  const sheet3 = ss.getSheetByName('給食');
+  const sheet4 = ss.getSheetByName('入力');
   save_pdf(ssId, sheet1, "all");
   save_pdf(ssId, sheet2, "all");
   save_pdf(ssId, sheet3, "all");
@@ -36,13 +36,13 @@ function save_all(){
 
 //自動実行時にPDFを条件に応じて保存する
 function save_pdf_auto(){
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
   ssId = ss.getId(); // スプレッドシートIDを取得
-  var sheet1 = ss.getSheetByName('学校');
-  var sheet2 = ss.getSheetByName('保健');
-  var sheet3 = ss.getSheetByName('給食');
-  var hoken_write = ss.getSheetByName('入力').getRange('G6').getValue();    //学校日を取得
-  var kyusyoku_write = ss.getSheetByName('入力').getRange('AJ6').getValue();//給食日を取得
+  const sheet1 = ss.getSheetByName('学校');
+  const sheet2 = ss.getSheetByName('保健');
+  const sheet3 = ss.getSheetByName('給食');
+  const hoken_write = ss.getSheetByName('入力').getRange('G6').getValue();    //学校日を取得
+  const kyusyoku_write = ss.getSheetByName('入力').getRange('AJ6').getValue();//給食日を取得
   save_pdf(ssId, sheet1, "auto");
   if (hoken_write == '〇'){ save_pdf(ssId, sheet2, "auto");}    //学校日なら保健日誌をPDF保存
   if (kyusyoku_write == '〇'){ save_pdf(ssId, sheet3, "auto");} //給食日なら給食日誌をPDF保存
@@ -50,8 +50,8 @@ function save_pdf_auto(){
 
 //保健日誌の備考のフォントサイズを元に戻す
 function hoken_font_size() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
-  var sheet = ss.getSheetByName('保健');
+  const ss = SpreadsheetApp.getActiveSpreadsheet(); //スプレッドシート
+  const sheet = ss.getSheetByName('保健');
   sheet.getRange('M11:V28').activate();
   sheet.getActiveRangeList().setFontSize(10);
 };

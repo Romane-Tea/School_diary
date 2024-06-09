@@ -24,9 +24,9 @@ async function start_html() {
   top_data = await get_sheet_data("リスト");  //リストシート全体のデータを取得
   hyouziUI = top_data[11][38];     //表示初期値を取得
 
-  // for (var i = 0; i<4 ; i++){  //34列行目から37行目 -1
+  // for (let i = 0; i<4 ; i++){  //34列行目から37行目 -1
   //   const reason_item =[];
-  //   for (var j=0 ; j<32 ;j++){  //34列目から65列目 -1
+  //   for (let j=0 ; j<32 ;j++){  //34列目から65列目 -1
   //     if (top_data[i+33][j+33] ==""){break;}else{
   //     reason_item[j] = top_data[i+33][j+33];
   //     }
@@ -35,9 +35,9 @@ async function start_html() {
   //   reason_list[i] = reason_item;
   // }
   
-  for (var i = 0; i<4 ; i++){  //33列行目から36列目 -1
+  for (let i = 0; i<4 ; i++){  //33列行目から36列目 -1
     const reason_item =[];
-    for (var j=0 ; j<32 ;j++){  //3行目から33列目 -1
+    for (let j=0 ; j<32 ;j++){  //3行目から33列目 -1
       if (top_data[j+1][i+32] ==""){break;}else{
       reason_item[j] = top_data[j+1][i+32];
       }
@@ -46,7 +46,7 @@ async function start_html() {
     console.log("i="+i,reason_item);
   }
   // 表示設定を読み込む
-  for (var i = 0; i < 8; i++) {
+  for (let i = 0; i < 8; i++) {
     hyouzi[i] = top_data[i + 13][38];
   }
   // // 事由リストを作成
@@ -70,23 +70,23 @@ function get_sheet_data(sheet_name) {
 
 // トップバーを作成
 function make_first(hyouziUI) {
-  var first_bar = document.getElementById('first_bar');
-  var child_n = first_bar.childElementCount;
+  let first_bar = document.getElementById('first_bar');
+  let child_n = first_bar.childElementCount;
   //ボタン等を一旦削除
-  for (var i = 0; i < child_n - 2; i++) {
+  for (let i = 0; i < child_n - 2; i++) {
     first_bar.removeChild(first_bar.lastChild);
   }
 
   if (hyouziUI == 1) {  //一覧表示時のトップバーの設定
-    var td1 = document.createElement('td');
-    var td2 = document.createElement('td');
-    var td3 = document.createElement('td');
-    var td4 = document.createElement('td');
-    var td5 = document.createElement('td');
-    var btn = document.createElement('button');
-    var input1 = document.createElement('input');
-    var input2 = document.createElement('input');
-    var input3 = document.createElement('input');
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let td3 = document.createElement('td');
+    let td4 = document.createElement('td');
+    let td5 = document.createElement('td');
+    let btn = document.createElement('button');
+    let input1 = document.createElement('input');
+    let input2 = document.createElement('input');
+    let input3 = document.createElement('input');
 
     td1.setAttribute('onclick', "getElementById('hurigana').click();");
     td1.setAttribute('class','btn btn_check');
@@ -136,10 +136,10 @@ function make_first(hyouziUI) {
     document.getElementById("fm").checked = true;
 
   } else if (hyouziUI == 2) {   //座席表示時のトップバーの設定
-    var td1 = document.createElement('td');
-    var td2 = document.createElement('td');
-    var btn1 = document.createElement('button');
-    var btn2 = document.createElement('button');
+    let td1 = document.createElement('td');
+    let td2 = document.createElement('td');
+    let btn1 = document.createElement('button');
+    let btn2 = document.createElement('button');
 
     btn1.setAttribute('id', 'chage_seki');
     btn1.setAttribute('class', 'btn btn_refresh');
@@ -165,9 +165,9 @@ function make_first(hyouziUI) {
 
 //表示形式の切り替えボタン関数
 function change_hyouziUI() {
-  var scrollEle = document.getElementById('scroll_table');
-  var tableEle1 = document.getElementById('data-table');
-  var tableEle2 = document.getElementById('data-table2');
+  let scrollEle = document.getElementById('scroll_table');
+  let tableEle1 = document.getElementById('data-table');
+  let tableEle2 = document.getElementById('data-table2');
   if (hyouziUI == 1) { 
     tableEle1.innerText ="";
     scrollEle.style.height = '0vh';
@@ -190,7 +190,7 @@ function change_hyouziUI() {
 
 //座席の表示順を交互に変更
 function chage_seki(){
-  var chage_seki_text = document.getElementById('chage_seki');
+  let chage_seki_text = document.getElementById('chage_seki');
   if(seki_No==1){
     chage_seki_text.innerText = '座席順に'
     seki_No = 2;
@@ -198,14 +198,14 @@ function chage_seki(){
     chage_seki_text.innerText = '出席番号順に'
     seki_No = 1;
   }
-  var tableEle = document.getElementById('data-table2');
+  let tableEle = document.getElementById('data-table2');
   tableEle.innerText = "";
   make_table(hyouziUI);
 }
 
 //シートの学級一覧からリストとして返す関数
 function class_list() {
-  var obj = document.getElementById('select_class');
+  let obj = document.getElementById('select_class');
   while (obj.lastChild) {
     obj.removeChild(obj.lastChild);
   }
@@ -214,8 +214,8 @@ function class_list() {
   op.text = "学級を選択";
   obj.appendChild(op);
 
-  for (var i = 1; i < 7; i++) {     //行番号3行目から8行目まで
-    for (var j = 1; j < 9; j++) {   //38列目から45列目まで
+  for (let i = 1; i < 7; i++) {     //行番号3行目から8行目まで
+    for (let j = 1; j < 9; j++) {   //38列目から45列目まで
       if ((top_data[i+1][j+38] != "") && (top_data[i+1][38] != "特支")) {
         let op = document.createElement("option");
         op.value = i + "_" + j;
@@ -234,9 +234,9 @@ function class_list() {
 // 一覧表示分岐
 function make_table(hyouziUI) {
   //表をタイトル以外削除
-  var tableEle1 = document.getElementById('data-table');  //表のオブジェクトを取得
+  let tableEle1 = document.getElementById('data-table');  //表のオブジェクトを取得
   tableEle1.innerText = "";                               //一旦一覧表を削除
-  var tableEle2 = document.getElementById('data-table2');  //表のオブジェクトを取得
+  let tableEle2 = document.getElementById('data-table2');  //表のオブジェクトを取得
   tableEle2.innerText = "";                               //一旦座席表を削除
   if (hyouziUI == 1) { make_hyou_table(kind); }
   if (hyouziUI == 2) { make_zaseki_table(grade, tclass); }
@@ -244,15 +244,15 @@ function make_table(hyouziUI) {
 
 //表テーブルを作成
 function make_hyou_table(kind) {
-  var tableEle = document.getElementById('data-table');
-  var th = document.createElement('thead');
-  var tr = document.createElement('tr');
-  var th1 = document.createElement('th');
-  var th2 = document.createElement('th');
-  var th3 = document.createElement('th');
-  var th4 = document.createElement('th');
-  var th5 = document.createElement('th');
-  var th6 = document.createElement('th');
+  let tableEle = document.getElementById('data-table');
+  let th = document.createElement('thead');
+  let tr = document.createElement('tr');
+  let th1 = document.createElement('th');
+  let th2 = document.createElement('th');
+  let th3 = document.createElement('th');
+  let th4 = document.createElement('th');
+  let th5 = document.createElement('th');
+  let th6 = document.createElement('th');
   tr.setAttribute("class", "td_line");
 
   th1.innerText = "学籍番号";
@@ -275,12 +275,12 @@ function make_hyou_table(kind) {
   th.appendChild(tr);
   tableEle.appendChild(th);
 
-  for (var i = start_row ; i < data1.length; i++) {
+  for (let i = start_row ; i < data1.length; i++) {
     id_num = data1[i][0];     // 4桁の番号を参照
     id_gr = Number(data1[i][0][0]);   // 4桁の千の位を取得
     id_cl = Number(data1[i][0][1]);   // 4桁の百の位を取得
 
-    var hantei = Boolean("true");    //boolean型の設定
+    let hantei = Boolean("true");    //boolean型の設定
     if (kind == 'grade') {           //選択の種類が学級毎なら
       if (grade == '特支') {
         hantei = ((data1[i][0][1] == '-') );// && (data1[i][0].split('-')[1] == tclass));
@@ -295,13 +295,13 @@ function make_hyou_table(kind) {
 
     if (hantei == true) {
       // テーブルの行を追加する
-      var tr = document.createElement('tr');
-      var td1 = document.createElement('td');
-      var td2 = document.createElement('td');
-      var td3 = document.createElement('td');
-      var td4 = document.createElement('td');
-      var td5 = document.createElement('td');
-      var td6 = document.createElement('td');
+      let tr = document.createElement('tr');
+      let td1 = document.createElement('td');
+      let td2 = document.createElement('td');
+      let td3 = document.createElement('td');
+      let td4 = document.createElement('td');
+      let td5 = document.createElement('td');
+      let td6 = document.createElement('td');
 
       tr.setAttribute("class", "td_line");
       // td1 学籍番号
@@ -320,7 +320,7 @@ function make_hyou_table(kind) {
       if (data1[i][5] == "") {
         make_buttons(td6, i, 0);
       } else {
-        var btn = document.createElement('button');
+        let btn = document.createElement('button');
         td6.innerText = '[' + data1[i][8] + ']' + data1[i][5] + '　:　' + data1[i][6] + '　:　' + data1[i][7] + '　　';
         td6.setAttribute("id", i + '_syukketu');
         td6.setAttribute('align', 'left');
@@ -346,12 +346,12 @@ function make_hyou_table(kind) {
 
 //座席テーブルを作成
 function make_zaseki_table(grade, tclass) {
-  var tableEle = document.getElementById('data-table2');
-  var bango = Number(grade) * 1000 + Number(tclass) * 100;
+  let tableEle = document.getElementById('data-table2');
+  let bango = Number(grade) * 1000 + Number(tclass) * 100;
 
   // クラス人数を数える
-  var ninzu = 0;
-  for (var c = 1; c < data1.length; c++) {
+  let ninzu = 0;
+  for (let c = 1; c < data1.length; c++) {
     if (grade == '特支') {
       if (data1[c][0].substr(2) == tclass) {
         ninzu += 1;
@@ -370,15 +370,15 @@ function make_zaseki_table(grade, tclass) {
 
   ninzu = yoko * tate;
 
-  var n = 1;        //通し番号
-  for (var i = 1; i <= tate; i++) {
+  let n = 1;        //通し番号
+  for (let i = 1; i <= tate; i++) {
     // テーブルの行を追加する
-    var tr = document.createElement('tr');
-    for (var j = 0; j < yoko; j++) {
+    let tr = document.createElement('tr');
+    for (let j = 0; j < yoko; j++) {
       if (seki_No == 1) {
         for (let s_row = start_row; s_row < data1.length; s_row++) {  //10行目からプログラム番号を検索する
-          var td = document.createElement('td');
-          var boolean_s = false;
+          let td = document.createElement('td');
+          let boolean_s = false;
           if (grade == '特支') {
             boolean_s = data1[s_row][0].substr(2) == tclass;
             start_row = s_row + 1;
@@ -388,7 +388,7 @@ function make_zaseki_table(grade, tclass) {
 
           //プログラム番号が通し番号と同じ,かつ学級が条件にあえば
           if (boolean_s) {
-            var text = data1[s_row][0] + " " + data1[s_row][1] + "  " + data1[s_row][4] + "\n" + data1[s_row][2];
+            let text = data1[s_row][0] + " " + data1[s_row][1] + "  " + data1[s_row][4] + "\n" + data1[s_row][2];
             td.setAttribute("id", s_row + '_syukketu');
             td.setAttribute("class", "btn btn--orange");
             td.innerText = text + '\n';
@@ -398,7 +398,7 @@ function make_zaseki_table(grade, tclass) {
             if (data1[s_row][5] == "") {
               make_buttons(td, s_row, 0);
             } else {
-              var btn = document.createElement('button');
+              let btn = document.createElement('button');
               td.innerText = text + '\n[' + data1[s_row][8] + ']' + data1[s_row][5] + ':' + data1[s_row][6] + ':' + data1[s_row][7] + '　';
               td.setAttribute("class", "btn btn--orange_black");
               td.style.fontWeight = "bold";
@@ -421,8 +421,8 @@ function make_zaseki_table(grade, tclass) {
       } else if (seki_No == 2) {
         for (let s_row = start_row; s_row < data1.length; s_row++) {  //13行目からプログラム番号を検索する
 
-          var td = document.createElement('td');
-          var boolean_s = false;
+          let td = document.createElement('td');
+          let boolean_s = false;
           if (grade == '特支') {
             boolean_s = data1[s_row][0].substr(2) == tclass;
             start_row = s_row + 1;
@@ -432,7 +432,7 @@ function make_zaseki_table(grade, tclass) {
 
           //出席番号を通し番号順に
           if (boolean_s) {
-            var text = data1[s_row][0] + " " + data1[s_row][1] + "  " + data1[s_row][4] + "\n" + data1[s_row][2];
+            let text = data1[s_row][0] + " " + data1[s_row][1] + "  " + data1[s_row][4] + "\n" + data1[s_row][2];
             td.setAttribute("id", s_row + '_syukketu');
             td.setAttribute("class", "btn btn--orange");
             td.innerText = text + '\n';
@@ -442,7 +442,7 @@ function make_zaseki_table(grade, tclass) {
             if (data1[s_row][5] == "") {
               make_buttons(td, s_row, 0);
             } else {
-              var btn = document.createElement('button');
+              let btn = document.createElement('button');
               td.innerText = text + '\n[' + data1[s_row][8] + ']' + data1[s_row][5] + ':' + data1[s_row][6] + ':' + data1[s_row][7] + '　';
               td.setAttribute("class", "btn btn--orange_black");
               td.style.fontWeight = "bold";
@@ -474,8 +474,8 @@ function make_zaseki_table(grade, tclass) {
 
 //学級選択時の動作
 function select_class() {
-  var select_class = document.getElementById('select_class');
-  var class_id = select_class.value;
+  let select_class = document.getElementById('select_class');
+  let class_id = select_class.value;
   kind = "grade"; 
   grade = class_id.split('_')[0];
   tclass = class_id.split('_')[1];
@@ -485,9 +485,9 @@ function select_class() {
 
 //復元ボタンの動作
 function rev_click(btn) {
-  var btn_id = btn.id;
-  var i = btn_id.split('_')[0];          //列番号を取得
-  var td = document.getElementById(i + '_syukketu');
+  let btn_id = btn.id;
+  let i = btn_id.split('_')[0];          //列番号を取得
+  let td = document.getElementById(i + '_syukketu');
   data1[i][5] = data_backup[i][5];      //データに欠席等を復元
   data1[i][6] = data_backup[i][6];      //データに事由を復元
   data1[i][7] = data_backup[i][7];      //データにその他を復元
@@ -503,10 +503,10 @@ function rev_click(btn) {
   if (hyouziUI ==1 ){
     td.textContent = '[' + data_backup[i][8] + ']' + data_backup[i][5] + '　:　' + data_backup[i][6] + '　:　' + data_backup[i][7];
   } else {
-    var text = data1[i][0] + " " + data1[i][1] + "  " + data1[i][4] + "\n" + data1[i][2];
+    let text = data1[i][0] + " " + data1[i][1] + "  " + data1[i][4] + "\n" + data1[i][2];
     td.innerText = text + '\n[' + data_backup[i][8] + ']' + data_backup[i][5] + ':' + data_backup[i][6] + ':' + data_backup[i][7];
   }
-  var btn = document.createElement('button');
+  let btn = document.createElement('button');
   btn.setAttribute("id", i + '_clear');
   btn.setAttribute('class', 'kbtn');
   btn.innerText = 'クリア';
@@ -516,9 +516,9 @@ function rev_click(btn) {
 
 //出欠等のボタンクリック時の動作
 function btclick(btn) {
-  var btn_id = btn.id;          //列番号を取得
-  var td = document.getElementById(btn_id + '_syukketu');
-  var btn_text = btn.textContent;   //欠席等の文字列を取得
+  let btn_id = btn.id;          //列番号を取得
+  let td = document.getElementById(btn_id + '_syukketu');
+  let btn_text = btn.textContent;   //欠席等の文字列を取得
   time_now = get_time_now();    //ボタンを押した時刻を取得
   data1[btn_id][5] = btn_text;      //データに欠席等を入力
   data1[btn_id][8] = time_now;      //データに時刻を入力
@@ -537,7 +537,7 @@ function btclick(btn) {
   } else {
     select_item = reason_list[1];
   }
-  var selecter = document.createElement('select');
+  let selecter = document.createElement('select');
   selecter.setAttribute('id', btn_id + '_select_reason');
   selecter.setAttribute('name', btn_id + '_' + btn_text);
 
@@ -545,7 +545,7 @@ function btclick(btn) {
   op.value = "";
   op.text = "事由を選択";
   selecter.appendChild(op);
-  for (var i = 1; i < select_item.length; i++) {
+  for (let i = 1; i < select_item.length; i++) {
     if (select_item[i] == "") { break }
     else {
       let op = document.createElement("option");
@@ -565,14 +565,14 @@ function btclick(btn) {
     td.setAttribute('align', 'left');
     td.style.color = "red";
   } else {
-    var text = data1[btn_id][0] + " " + data1[btn_id][1] + "  " + data1[btn_id][4] + "\n" + data1[btn_id][2];
+    let text = data1[btn_id][0] + " " + data1[btn_id][1] + "  " + data1[btn_id][4] + "\n" + data1[btn_id][2];
     td.textContent = text + '\n' + '[' + time_now + ']' + btn_text + '　:';
     td.setAttribute("class", "btn btn--orange_black");
   }
   td.style.fontWeight = "bold";
   td.appendChild(selecter);
 
-  var btn = document.createElement('button');
+  let btn = document.createElement('button');
   btn.setAttribute("id", btn_id + '_clear');
   btn.setAttribute('class', 'kbtn');
   btn.innerText = 'クリア';
@@ -582,7 +582,7 @@ function btclick(btn) {
 
 //欠席等の理由をリストから選択した時の動作
 document.addEventListener('change', function (e) {
-  var elem = e.target.id;     //idを取得
+  let elem = e.target.id;     //idを取得
 
   if (elem == null || elem == 'hurigana' || elem == 'birthday' || elem == 'fm' || elem.indexOf('_text') == 0 ){ }
   else if (elem == 'select_class') { }    //クラス選択なら何もしない
@@ -590,19 +590,19 @@ document.addEventListener('change', function (e) {
     changeFontSize();
   }
   else {
-    var result = document.getElementById(elem).value;
-    var id_s = result.split('_');
+    let result = document.getElementById(elem).value;
+    let id_s = result.split('_');
 
-    var row_n = id_s[0];  //欠席等のrow番号を取得
-    var ziyu = id_s[1];   //事由を取得
-    var reason = id_s[2]; //理由を取得
-    var time_e = data1[row_n][8]; //入力時間を取得
+    let row_n = id_s[0];  //欠席等のrow番号を取得
+    let ziyu = id_s[1];   //事由を取得
+    let reason = id_s[2]; //理由を取得
+    let time_e = data1[row_n][8]; //入力時間を取得
 
     console.log(row_n + ":" + ziyu + ":" + reason);
     data1[row_n][6] = reason;      //データに欠席等を入力
     google.script.run.SetSpreadSheet("欠席入力", reason, row_n, 6); //スプレットシートの事由を消去
 
-    var td = document.getElementById(row_n + '_syukketu');
+    let td = document.getElementById(row_n + '_syukketu');
     //ボタン等を一旦削除
     while (td.lastChild) {
       td.removeChild(td.lastChild);
@@ -612,22 +612,22 @@ document.addEventListener('change', function (e) {
     if (hyouziUI ==1 ){
       td.textContent = '[' + time_e + ']' + ziyu + '　:　' + reason + '　:　';
     } else {
-      var text = data1[row_n][0] + " " + data1[row_n][1] + "  " + data1[row_n][4] + "\n" + data1[row_n][2];
+      let text = data1[row_n][0] + " " + data1[row_n][1] + "  " + data1[row_n][4] + "\n" + data1[row_n][2];
       td.innerText = text + '\n' + '[' + time_e + ']' + ziyu + '　:　' + reason + '　:　';
     }
-    var input = document.createElement('input');
+    let input = document.createElement('input');
     input.setAttribute('id', row_n + '_text');
     input.setAttribute('type', 'text');
     input.setAttribute('name', ziyu + '　:　' + reason + '　:　');
     input.setAttribute('size', '5px');
 
-    var add_btn = document.createElement('button');
+    let add_btn = document.createElement('button');
     add_btn.setAttribute("id", row_n + '_add');
     add_btn.setAttribute('class', 'kbtn');
     add_btn.innerText = '追加';
     add_btn.setAttribute('onclick', "add_click(this)");
 
-    var btn = document.createElement('button');
+    let btn = document.createElement('button');
     btn.setAttribute("id", row_n + '_clear');
     btn.setAttribute('class', 'kbtn');
     btn.innerText = 'クリア';
@@ -640,10 +640,10 @@ document.addEventListener('change', function (e) {
 
 //追加ボタンの動作
 function add_click(btn) {
-  var btn_id = btn.id;
-  var i = btn_id.split('_')[0];   //列番号を取得
-  var element = document.getElementById(i + '_text');
-  var td = document.getElementById(i + '_syukketu');
+  let btn_id = btn.id;
+  let i = btn_id.split('_')[0];   //列番号を取得
+  let element = document.getElementById(i + '_text');
+  let td = document.getElementById(i + '_syukketu');
   btn_text = element.name;
   input_text = element.value;
   data1[i][7] = input_text;      //データにその他の理由を入力
@@ -655,10 +655,10 @@ function add_click(btn) {
   if (hyouziUI ==1 ){
     td.textContent = '[' + data1[i][8] + ']' + btn_text + input_text + '　　';
   } else {
-    var text = data1[i][0] + " " + data1[i][1] + "  " + data1[i][4] + "\n" + data1[i][2];
+    let text = data1[i][0] + " " + data1[i][1] + "  " + data1[i][4] + "\n" + data1[i][2];
     td.innerText = text + '\n' + '[' + data1[i][8] + ']' + btn_text + input_text + '　　';
   }
-  var btn = document.createElement('button');
+  let btn = document.createElement('button');
   btn.setAttribute("id", i + '_clear');
   btn.setAttribute('class', 'kbtn');
   btn.innerText = 'クリア';
@@ -667,19 +667,19 @@ function add_click(btn) {
 }
 
 function checkbox_cell(obj, id) {
-  var CELL = document.getElementById(id);
-  var TABLE = CELL.parentNode.parentNode.parentNode;
-  for (var i = 0; TABLE.rows[i]; i++) {
+  let CELL = document.getElementById(id);
+  let TABLE = CELL.parentNode.parentNode.parentNode;
+  for (let i = 0; TABLE.rows[i]; i++) {
     TABLE.rows[i].cells[CELL.cellIndex].style.display = (obj.checked) ? '' : 'none';
   }
 }
 
 //クリアボタンの動作
 function clear_click(btn) {
-  var btn_id = btn.id;
-  var i = btn_id.split('_')[0];          //列番号を取得
+  let btn_id = btn.id;
+  let i = btn_id.split('_')[0];          //列番号を取得
   // console.log(btn_id);
-  var td = document.getElementById(i + '_syukketu');
+  let td = document.getElementById(i + '_syukketu');
   data1[i][5] = '';      //データに欠席等を入力
   data1[i][6] = '';      //データに事由を入力
   data1[i][7] = '';      //データにその他を入力
@@ -692,10 +692,10 @@ function clear_click(btn) {
     td.removeChild(td.lastChild);
   }
   if (hyouziUI==1){}else{
-    var text = data1[i][0] + " " + data1[i][1] + "  " + data1[i][4] + "\n" + data1[i][2];
+    let text = data1[i][0] + " " + data1[i][1] + "  " + data1[i][4] + "\n" + data1[i][2];
     td.innerText = text + '\n'
   }
-  var j = data_backup[i][8];
+  let j = data_backup[i][8];
   if (j == "") {
     make_buttons(td, i, 0);
   } else {
@@ -705,24 +705,24 @@ function clear_click(btn) {
 
 //欠席者数一覧の表を作成
 function make_table_kesseki() {
-  var tableEle = document.getElementById('data-table');
+  let tableEle = document.getElementById('data-table');
   tableEle.innerText = "";
-  var kesseki_data = [];
+  let kesseki_data = [];
   //欠席入力のE1からI6までを読み込み表示
-  for (var i = 0; i < 6; i++) {
-    var kesseki_data_row = [];
-    for (var j = 4; j < 9; j++) {
+  for (let i = 0; i < 6; i++) {
+    let kesseki_data_row = [];
+    for (let j = 4; j < 9; j++) {
       kesseki_data_row[j - 4] = data1[i][j];
     }
     kesseki_data[i] = kesseki_data_row;
   }
-  for (var i = 0; i < kesseki_data.length; i++) {
+  for (let i = 0; i < kesseki_data.length; i++) {
     if (kesseki_data[i][0] == "") {
     } else {
-      var tr = document.createElement('tr');
-      for (var j = 0; j < kesseki_data[i].length; j++) {
-        var td = document.createElement('td');
-        var text = "　　" + kesseki_data[i][j] + "　　";
+      let tr = document.createElement('tr');
+      for (let j = 0; j < kesseki_data[i].length; j++) {
+        let td = document.createElement('td');
+        let text = "　　" + kesseki_data[i][j] + "　　";
         td.innerText = text;
         tr.appendChild(td);
       }
@@ -733,14 +733,14 @@ function make_table_kesseki() {
 
 //欠席等入力無しのときの、ボタン一覧を作成する関数  rev=1で、復元ボタン作成
 function make_buttons(td, i, rev) {
-  var btn1 = document.createElement('button');
-  var btn2 = document.createElement('button');
-  var btn3 = document.createElement('button');
-  var btn4 = document.createElement('button');
-  var btn5 = document.createElement('button');
-  var btn6 = document.createElement('button');
-  var btn7 = document.createElement('button');
-  var btn8 = document.createElement('button');
+  let btn1 = document.createElement('button');
+  let btn2 = document.createElement('button');
+  let btn3 = document.createElement('button');
+  let btn4 = document.createElement('button');
+  let btn5 = document.createElement('button');
+  let btn6 = document.createElement('button');
+  let btn7 = document.createElement('button');
+  let btn8 = document.createElement('button');
 
   btn1.setAttribute("id", i);
   btn1.innerText = "欠席";
@@ -796,7 +796,7 @@ function make_buttons(td, i, rev) {
 
 //再読み込み
 function refresh() {
-  var obj = document.getElementById('select_class');
+  let obj = document.getElementById('select_class');
   while (obj.lastChild) {
     obj.removeChild(obj.lastChild);
   }
@@ -806,7 +806,7 @@ function refresh() {
   obj.appendChild(op);
   hyouziUI = 2;
   change_hyouziUI();
-  var tableEle = document.getElementById('data-table');  //表のオブジェクトを取得
+  let tableEle = document.getElementById('data-table');  //表のオブジェクトを取得
   tableEle.innerText = "";
   start_html();
 }
@@ -831,11 +831,11 @@ function k_itiran() {
 function changeFontSize() {
   // スライダーとデータ要素を取得
   var slider = document.getElementById("slider");
-  var root = document.documentElement;
-  var data = document.getElementById("data-table");
-  var font_size = document.getElementById("fontsize");
+  let root = document.documentElement;
+  let data = document.getElementById("data-table");
+  let font_size = document.getElementById("fontsize");
   // スライダーの値に応じてフォントサイズを計算
-  var fontSize = slider.value + "px";
+  let fontSize = slider.value + "px";
   // データ要素のフォントサイズを設定
   // ルート要素のカスタムプロパティの値を設定
   root.style.setProperty("--font-size", fontSize);

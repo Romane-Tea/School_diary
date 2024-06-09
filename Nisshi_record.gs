@@ -47,7 +47,7 @@ function Nisshi_record_backup(){
 
   //記録シートの最終記録日の列を取得
   //行の先頭列から右方向に取得するコード
-  var lastCol = sheetR.getRange(3, 1).getNextDataCell(SpreadsheetApp.Direction.NEXT).getColumn();
+  let lastCol = sheetR.getRange(3, 1).getNextDataCell(SpreadsheetApp.Direction.NEXT).getColumn();
   if (lastCol != 1){
     if (lastCol == sheetR.getMaxColumns() ){
       sheetR.insertColumnAfter(lastCol);
@@ -55,10 +55,10 @@ function Nisshi_record_backup(){
     }
   }
   //入力データの最終行を取得
-  var lastRow = sheetN.getRange(sheetN.getMaxRows(), 49).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
+  let lastRow = sheetN.getRange(sheetN.getMaxRows(), 49).getNextDataCell(SpreadsheetApp.Direction.UP).getRow();
   //日付の取得
-  var today = sheetN.getRange("AW3").getValue().setHours(0,0,0,0);
-  var past = sheetR.getRange(3,lastCol).getValue().setHours(0,0,0,0);
+  let today = sheetN.getRange("AW3").getValue().setHours(0,0,0,0);
+  let past = sheetR.getRange(3,lastCol).getValue().setHours(0,0,0,0);
 
   if (past == today){
     let copyRange = sheetN.getRange(1,49,lastRow,1);
